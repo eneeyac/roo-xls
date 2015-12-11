@@ -204,7 +204,8 @@ class Roo::Excel2003XML < Roo::Base
         row = skip_to_row if skip_to_row > 0
         style_name = r['StyleID'] if r['StyleID']
         r.xpath("./#{@namespace}:Cell").each do |c|
-          skip_to_col = c['Index'].to_i
+          skip_to_col = c.attributes['Index'].nil? ? 0 : c.attributes['Index'].value.to_i
+
           col = skip_to_col if skip_to_col > 0
           if c['StyleID']
             style_name = c['StyleID']

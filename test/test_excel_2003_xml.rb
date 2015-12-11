@@ -38,4 +38,22 @@ class TestRooExcel < MiniTest::Test
       assert_equal '5026', oo.cell(3, 3)
     end
   end
+
+  def test_read_cells_before_ss_index
+    with_xml_spreadsheet('ss_index') do |oo|
+      assert_equal 'Test Title', oo.cell(4, 3, oo.default_sheet)
+    end
+  end
+
+  def test_read_cells_missed_by_ss_index
+    with_xml_spreadsheet('ss_index') do |oo|
+      assert_equal nil, oo.cell(4, 4, oo.default_sheet)
+    end
+  end
+
+  def test_read_cells_after_ss_index
+    with_xml_spreadsheet('ss_index') do |oo|
+      assert_equal 16659.44542, oo.cell(4, 6, oo.default_sheet)
+    end
+  end
 end
